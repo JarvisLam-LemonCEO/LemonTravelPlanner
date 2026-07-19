@@ -7,8 +7,7 @@ The app lets users create trips, generate day-by-day itineraries, edit activitie
 ## Screenshots
 |Home Page|Create Trip|Trip View|AI Itinernary|Route Map|
 |---------|-----------|---------|-------------|---------|
-|![Home Screen](Screenshots/HomePage.png)|![Create Trip](Screenshots/CreateTrip.png)|
-![Trip View](Screenshots/TripView.png)|![AI Itinernary](Screenshots/AIItinernary.png)|![Route Map](Screenshots/RouteMap.png)|
+|![Home Screen](Screenshots/HomePage.png)|![Create Trip](Screenshots/CreateTrip.png)|![Trip View](Screenshots/TripView.png)|![AI Itinernary](Screenshots/AIItinernary.png)|![Route Map](Screenshots/RouteMap.png)|
 
 ## Technology
 
