@@ -5,7 +5,7 @@ TravelPlanner is an iOS itinerary-planning app built with SwiftUI, SwiftData, Ma
 The app lets users create trips, generate day-by-day itineraries, edit activities, search for real places, display locations on a map, calculate routes, estimate costs, and save transportation information.
 
 ## Screenshots
-
+|Home Page|Create Trip|Trip View|AI Itinernary|Route Map|
 |![Home Screen](Screenshots/HomePage.png)|![Create Trip](Screenshots/CreateTrip.png)|
 ![Trip View](Screenshots/TripView.png)|![AI Itinernary](Screenshots/AIItinernary.png)|![Route Map](Screenshots/RouteMap.png)|
 
