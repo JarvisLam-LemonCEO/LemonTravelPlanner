@@ -99,130 +99,104 @@ curl http://127.0.0.1:1234/v1/chat/completions \
   }'
 ```
 
-## Where to change the LM Studio URL and model identifier
+# AI Configuration
 
-The user should normally change these values in only one file:
+All AI settings are located in:
 
-```text
-Features/Itinerary/TripDetailView.swift
+``` text
+App/AppConfiguration.swift
 ```
 
-Open `TripDetailView.swift` and find the initializer that creates `LMStudioItineraryService`:
+Example:
 
-```swift
-private let itineraryGenerator: ItineraryGenerator
-
-init(trip: Trip) {
-    self.trip = trip
-
-    itineraryGenerator = ItineraryGenerator(
-        service: LMStudioItineraryService(
-            baseURL: URL(
-                string: "http://127.0.0.1:1234"
-            )!,
-            modelIdentifier: "google/gemma-4-e4b"
-        )
-    )
-}
-```
-
-### Change the server URL
-
-Change this line:
-
-```swift
-string: "http://127.0.0.1:1234"
-```
-
-For the iOS Simulator running on the same Mac, use:
-
-```swift
-string: "http://127.0.0.1:1234"
-```
-
-For a physical iPhone, `127.0.0.1` points to the iPhone, not the Mac. Enable LM Studio network serving and replace it with the Mac's local network address:
-
-```swift
-string: "http://192.168.1.25:1234"
-```
-
-Replace `192.168.1.25` with the actual local IP address of the Mac.
-
-### Change the model identifier
-
-Change this line:
-
-```swift
-modelIdentifier: "google/gemma-4-e4b"
-```
-
-Replace the value with the exact **API Model Identifier** shown in LM Studio. For example:
-
-```swift
-modelIdentifier: "your-new-model-identifier"
-```
-
-Do not use the display name from the model library unless it exactly matches the API Model Identifier.
-
-## Recommended central configuration
-
-Instead of keeping configuration directly in `TripDetailView.swift`, create a file named:
-
-```text
-AppConfiguration.swift
-```
-
-Add:
-
-```swift
+``` swift
 import Foundation
 
 enum AppConfiguration {
+
+    enum AIProvider {
+        case mock
+        case lmStudio
+        case openAI
+    }
+
+    static let provider: AIProvider = .lmStudio
+
     static let lmStudioBaseURL = URL(
         string: "http://127.0.0.1:1234"
     )!
 
-    static let lmStudioModelIdentifier =
+    static let lmStudioModel =
         "google/gemma-4-e4b"
+
+    static let backendURL = URL(
+        string: "https://your-api.com"
+    )!
 }
 ```
+# LM Studio Setup
 
-Then update `TripDetailView.swift`:
+1.  Install LM Studio.
+2.  Download a supported instruct model.
+3.  Start the Local Server.
+4.  Confirm:
 
-```swift
-private let itineraryGenerator: ItineraryGenerator
-
-init(trip: Trip) {
-    self.trip = trip
-
-    itineraryGenerator = ItineraryGenerator(
-        service: LMStudioItineraryService(
-            baseURL: AppConfiguration.lmStudioBaseURL,
-            modelIdentifier:
-                AppConfiguration.lmStudioModelIdentifier
-        )
-    )
-}
+``` text
+http://127.0.0.1:1234
 ```
 
-After this change, users only need to edit:
+Check models:
 
-```text
-AppConfiguration.swift
+``` bash
+curl http://127.0.0.1:1234/v1/models
 ```
 
-The two configurable lines are:
+Use the returned model ID in:
 
-```swift
-static let lmStudioBaseURL = URL(
-    string: "http://127.0.0.1:1234"
-)!
-
-static let lmStudioModelIdentifier =
+``` swift
+static let lmStudioModel =
     "google/gemma-4-e4b"
 ```
 
-This is the recommended setup because it keeps environment configuration separate from the user interface.
+# URL Configuration
+
+## iOS Simulator
+
+``` swift
+static let lmStudioBaseURL =
+URL(string:"http://127.0.0.1:1234")!
+```
+
+## Physical iPhone
+
+Replace with your Mac's LAN IP:
+
+``` swift
+static let lmStudioBaseURL =
+URL(string:"http://192.168.1.25:1234")!
+```
+
+Enable **Serve on Local Network** in LM Studio.
+
+# Switching AI Providers
+
+## Mock
+
+``` swift
+static let provider: AIProvider = .mock
+```
+
+## LM Studio
+
+``` swift
+static let provider: AIProvider = .lmStudio
+```
+
+## OpenAI Backend
+
+``` swift
+static let provider: AIProvider = .openAI
+```
 
 ## Allow local HTTP networking
 
